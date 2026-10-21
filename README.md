@@ -63,7 +63,7 @@ Method and limits: [paper §6](paper.md#6-evaluation); script: [`tools/metrics.p
 2. Choose the default: **A · Flat**, **B · Quiet**, or keep Modern.
 3. Keep the other as an option, or drop it.
 
-Reply on the issue or on Discord; the pull requests open the same day.
+Discussion: [storytold/vectorcraft#3439](https://github.com/storytold/vectorcraft/issues/3439). The pull requests open the same day a direction is chosen.
 
 ## Files
 
