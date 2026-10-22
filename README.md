@@ -9,7 +9,7 @@ A proposal for [VectorCraft](https://github.com/storytold/vectorcraft) by [@Taha
 | **The FigCraft prototype** | [figcraft/VectorCraft UI proposal.figcraft](figcraft/) — open in FigCraft, press Present |
 | **The code** | branches [`ui/flat-scheme`](https://github.com/storytold/vectorcraft/compare/main...Taha-Mahmoodi:vectorcraft:ui/flat-scheme) and [`ui/quiet-scheme`](https://github.com/storytold/vectorcraft/compare/main...Taha-Mahmoodi:vectorcraft:ui/quiet-scheme) |
 
-![Today, A · Flat and B · Quiet, Medium Dark — rendered from the real code](compare-mediumDark.png)
+![Today, A · Flat and B · Quiet, Medium Dark — live screenshots of the running app](compare-mediumDark.png)
 
 ## Findings
 
@@ -35,20 +35,22 @@ Why these matter — common-region grouping, clutter measures, colour-driven att
 ![Close-up: today's cards vs flush columns](compare-mediumDark-dock.png)
 ![Light: today, A, B](compare-light.png)
 
-FigCraft mockups and design-system sheets: [`mockups/`](mockups/). Real-code renders for every scheme and brightness: [`app/`](app/).
+FigCraft mockups and design-system sheets: [`mockups/`](mockups/). Live screenshots of every scheme at all four brightness levels: [`live/`](live/); offscreen renders: [`app/`](app/).
 
-## Measurements (chrome only, real code, 1440 × 900)
+## Measurements (chrome only, live screenshots, 1440 × 900)
 
 | | Edge density (Properties / Layers) | Coloured pixels (Properties / Layers) |
 |---|---|---|
-| Today · Modern, Medium Dark | 6.35 % / 5.22 % | 0.31 % / 0.47 % |
-| A · Flat, Medium Dark | 5.36 % / 4.39 % (−16 %) | 0.18 % / 0.34 % |
-| B · Quiet, Medium Dark | 5.02 % / 4.07 % (−21 %) | 0.18 % / 0.33 % |
-| Today · Modern, Light | 6.17 % / 4.95 % | 0.18 % / 0.34 % |
-| A · Flat, Light | 5.73 % / 4.77 % | 0.18 % / 0.34 % |
-| B · Quiet, Light | 5.65 % / 4.70 % | 0.18 % / 0.33 % |
+| Today · 0.14.0 Modern, Medium Dark | 6.25 % / 5.05 % | 0.33 % / 0.49 % |
+| A · Flat, Medium Dark | 5.07 % / 4.05 % (−19 %) | 0.19 % / 0.36 % |
+| B · Quiet, Medium Dark | 5.06 % / 4.07 % (−19 %) | 0.19 % / 0.35 % |
+| Today · 0.14.0 Modern, Light | 5.42 % / 4.13 % | 0.19 % / 0.36 % |
+| A · Flat, Light | 4.93 % / 3.92 % (−9 %) | 0.19 % / 0.36 % |
+| B · Quiet, Light | 4.87 % / 3.86 % (−10 %) | 0.19 % / 0.35 % |
 
-Method and limits: [paper §6](paper.md#6-evaluation); script: [`tools/metrics.py`](tools/metrics.py). These are image proxies, not a user study.
+Method and limits: [paper §6](paper.md#6-evaluation); scripts: [`tools/shoot.py`](tools/shoot.py), [`tools/metrics.py`](tools/metrics.py). These are image proxies, not a user study.
+
+![Layers tab, Medium Dark: today, A, B](compare-mediumDark-layers.png)
 
 ## What's ready
 
@@ -72,7 +74,8 @@ Discussion: [storytold/vectorcraft#3439](https://github.com/storytold/vectorcraf
 | `ARGUMENT.md`, `paper.md`, `paper.pdf` | The argument and the paper |
 | `figcraft/` | FigCraft prototype (pages: Read me, Current, A, B, Overview) |
 | `mockups/` | PNGs exported from FigCraft |
-| `app/` | Renders of the real code (`kittest-<scheme>-<brightness>-<tab>.png`, canvas rect in the `.json`) |
+| `live/` | Live screenshots of the running app (`<today|flat|quiet>-<brightness>-<tab>.png`, canvas rects in `canvas-rects.json`) |
+| `app/` | Offscreen renders of the real code (`kittest-<scheme>-<brightness>-<tab>.png`, canvas rect in the `.json`) |
 | `compare-*.png` | Side-by-side figures |
 | `tools/` | `build.py` (generates the FigCraft file over FigCraft's control channel), `metrics.py`, `shoot.py`, the offscreen render harness |
 

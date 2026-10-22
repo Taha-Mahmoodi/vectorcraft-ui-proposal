@@ -2,11 +2,11 @@
 
 **Taha Mahmoodi** (@Taha-Mahmoodi) · VectorCraft contributor · October 2026
 
-*Proposal paper. Companion files: FigCraft prototype (`VectorCraft UI proposal.figcraft`), mockups (`mockups/`) and renders of the real code (`app/`), ready code on branches `ui/flat-scheme` and `ui/quiet-scheme` of github.com/Taha-Mahmoodi/vectorcraft.*
+*Proposal paper. Companion files: FigCraft prototype (`VectorCraft UI proposal.figcraft`), mockups (`mockups/`), live screenshots of the real app (`live/`) and offscreen renders (`app/`), ready code on branches `ui/flat-scheme` and `ui/quiet-scheme` of github.com/Taha-Mahmoodi/vectorcraft.*
 
 ## Abstract
 
-VectorCraft 0.12 restyled the interface (#2331): the toolbar, the panel rail and the panel dock became rounded *cards* set inside square columns, controls got softer corners, and a coral accent now marks the active tool, selected rows and filled buttons. We argue that for a design tool this look works against its users. Nested containers add edges that carry no grouping information, corner radii no longer follow a system, and a saturated accent competes with the artwork for attention and for colour judgement. We ground each claim in perception research and design-system practice, audit the current code and screenshots, and present two alternatives — **A · Flat** and **B · Quiet**, each in Dark and Light — designed in FigCraft and **already implemented** as opt-in colour schemes that keep Modern and Classic unchanged. On matched renders of the real interface code, both proposals lower the edge density of the chrome by 16–22 % at the default Medium Dark brightness (4–8 % in Light) and cut its coloured pixels by 28–42 % at Medium Dark, with Modern and Classic unchanged. We ask the project owner to choose one of them (or neither) as the default; the code can be opened as pull requests the same day.
+VectorCraft 0.12 restyled the interface (#2331): the toolbar, the panel rail and the panel dock became rounded *cards* set inside square columns, controls got softer corners, and a coral accent now marks the active tool, selected rows and filled buttons. We argue that for a design tool this look works against its users. Nested containers add edges that carry no grouping information, corner radii no longer follow a system, and a saturated accent competes with the artwork for attention and for colour judgement. We ground each claim in perception research and design-system practice, audit the current code and screenshots, and present two alternatives — **A · Flat** and **B · Quiet**, each in Dark and Light — designed in FigCraft and **already implemented** as opt-in colour schemes that keep Modern and Classic unchanged. On matched screenshots of the running app, both proposals lower the edge density of the chrome by 19–20 % at the default Medium Dark brightness (5–10 % in Light) and cut its coloured pixels by 27–42 % at Medium Dark, with Modern and Classic unchanged. We ask the project owner to choose one of them (or neither) as the default; the code can be opened as pull requests the same day.
 
 ## 1 Introduction
 
@@ -116,26 +116,27 @@ Both designs are implemented as additional choices under **Preferences › User 
 
 ## 6 Evaluation
 
-**Method.** We built the same document (a yellow circle, a blue rectangle and the text "Poster draft", with the circle selected) in each build, at 1440 × 900 points, Properties and Layers tabs, and rendered the whole window offscreen with egui_kittest's wgpu renderer at 2× (the same egui frame the window shows; harness in `tools/`). We measured the *chrome* — every pixel outside the canvas rectangle the app reports — for (a) **edge density**, the share of pixels where the Sobel gradient of CIELAB L\* exceeds 8 per pixel (Mack & Oliva 2004), and (b) **chromatic share**, the share of pixels with CIELAB chroma C\*ab > 15. The script is `tools/metrics.py` in the proposal repository.
+**Method.** We built the same document (a yellow circle, a blue rectangle and the text "Poster draft", with the circle selected) in a fresh window of each build, resized it to 1440 × 900 points, and took screenshots of the live window (Retina, 2×) through the app's control channel (`ui.screenshot`), on the Properties and Layers tabs. *Today* is the released VectorCraft 0.14.0 (Modern scheme, as shipped); A and B are the proposal branch, built in release mode. We measured the *chrome* — every pixel outside the canvas rectangle the app reports — for (a) **edge density**, the share of pixels where the Sobel gradient of CIELAB L\* exceeds 8 per pixel (Mack & Oliva 2004), and (b) **chromatic share**, the share of pixels with CIELAB chroma C\*ab > 15. Scripts: `tools/shoot.py` and `tools/metrics.py`; screenshots and canvas rectangles: `live/`.
 
-| Build (offscreen render of the real UI) | Edge density, Properties | Edge density, Layers | Chromatic share, Properties | Chromatic share, Layers |
+| Live screenshot | Edge density, Properties | Edge density, Layers | Chromatic share, Properties | Chromatic share, Layers |
 |---|---:|---:|---:|---:|
-| Today · Modern, Medium Dark | 6.35 % | 5.22 % | 0.31 % | 0.47 % |
-| A · Flat, Medium Dark | 5.36 % (−16 %) | 4.39 % (−16 %) | 0.18 % (−42 %) | 0.34 % (−28 %) |
-| B · Quiet, Medium Dark | 5.02 % (−21 %) | 4.07 % (−22 %) | 0.18 % (−42 %) | 0.33 % (−30 %) |
-| Today · Modern, Light | 6.17 % | 4.95 % | 0.18 % | 0.34 % |
-| A · Flat, Light | 5.73 % (−7 %) | 4.77 % (−4 %) | 0.18 % | 0.34 % |
-| B · Quiet, Light | 5.65 % (−8 %) | 4.70 % (−5 %) | 0.18 % | 0.33 % |
+| Today · 0.14.0 Modern, Medium Dark | 6.25 % | 5.05 % | 0.33 % | 0.49 % |
+| A · Flat, Medium Dark | 5.07 % (−19 %) | 4.05 % (−20 %) | 0.19 % (−42 %) | 0.36 % (−27 %) |
+| B · Quiet, Medium Dark | 5.06 % (−19 %) | 4.07 % (−19 %) | 0.19 % (−42 %) | 0.35 % (−29 %) |
+| Today · 0.14.0 Modern, Light | 5.42 % | 4.13 % | 0.19 % | 0.36 % |
+| A · Flat, Light | 4.93 % (−9 %) | 3.92 % (−5 %) | 0.19 % | 0.36 % |
+| B · Quiet, Light | 4.87 % (−10 %) | 3.86 % (−7 %) | 0.19 % | 0.35 % |
 
-*Chrome = all pixels outside the canvas rectangle the app reports (≈ 2.1 million pixels per 2× render). Renders: `app/kittest-*.png`, made with egui_kittest's wgpu renderer at 1440 × 900 points, 2× (the screen was locked, so live screenshots were not possible; the kittest renders draw the same egui frame the window shows).*
+*Chrome = all pixels outside the canvas rectangle (≈ 2.0 million pixels per screenshot). Screenshots of every scheme at all four brightness levels are in `live/`; offscreen renders of the same code (egui_kittest, `app/`) show the same direction.*
 
-![Figure 6 — The real app, Medium Dark: today, A, B.](compare-mediumDark.png)
-![Figure 7 — The real app, Light: today, A, B.](compare-light.png)
-![Figure 8 — Close-up of the rail and dock: today's cards vs. flush columns.](compare-mediumDark-dock.png)
+![Figure 6 — Live screenshots, Medium Dark: today (0.14.0), A, B.](compare-mediumDark.png)
+![Figure 7 — Live screenshots, Light: today, A, B.](compare-light.png)
+![Figure 8 — Layers tab, Medium Dark: today, A, B.](compare-mediumDark-layers.png)
+![Figure 9 — Close-up of the rail and dock: today's cards vs. flush columns.](compare-mediumDark-dock.png)
 
-**Reading the numbers.** Removing the cards and the frame bands removes edges, so edge density falls in every case, most at Medium Dark, where today's cards sit on a much darker frame colour. In Light the cards are low-contrast already, so the gain is small. The coloured-pixel share at Medium Dark falls because the active tool and selected rows are no longer tinted with the accent; what remains in every build is the selected object's fill swatch and the Discord button. Modern at Light uses a light accent tint that falls under the chroma threshold, so it measures the same as the proposals there.
+**Reading the numbers.** Removing the cards and the frame bands removes edges, so edge density falls in every case, most at Medium Dark, where today's cards sit on a much darker frame colour; in Light the cards are low-contrast already, so the gain is smaller. In the live window A and B measure almost the same: Quiet's missing divider lines are offset by its pill tabs and shadows. The coloured-pixel share at Medium Dark falls because the active tool and selected rows are no longer tinted with the accent; what remains in every build is the selected object's fill swatch and the Discord button. Modern at Light uses a light accent tint that falls under the chroma threshold, so it measures the same as the proposals there.
 
-**Limits.** These are image proxies, not a user study. Edge density depends on content (the Layers tab differs per build in row styling); chromatic share is small in every build because the accent covers few pixels — its cost is salience (Section 2.3), not area. A short preference test with community members (both proposals installed side by side via the Color Scheme preference) would settle what the measurements cannot.
+**Limits.** These are image proxies, not a user study. Edge density depends on content (the Layers tab differs per build in row styling), and today's build (0.14.0) is a little newer than the proposal branch's base, though nothing in the measured chrome differs between them except the scheme; chromatic share is small in every build because the accent covers few pixels — its cost is salience (Section 2.3), not area. A short preference test with community members (both proposals installed side by side via the Color Scheme preference) would settle what the measurements cannot.
 
 ## 7 Decision requested
 

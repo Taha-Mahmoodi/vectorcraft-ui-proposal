@@ -15,9 +15,9 @@ em { color: #444; }
 ul li { margin: 2pt 0; font-size: 9.5pt; }
 </style></head><body><h1 id="quiet-chrome-a-neutral-flat-interface-for-vectorcraft">Quiet Chrome: a neutral, flat interface for VectorCraft</h1>
 <p><strong>Taha Mahmoodi</strong> (@Taha-Mahmoodi) · VectorCraft contributor · October 2026</p>
-<p><em>Proposal paper. Companion files: FigCraft prototype (<code>VectorCraft UI proposal.figcraft</code>), mockups (<code>mockups/</code>) and renders of the real code (<code>app/</code>), ready code on branches <code>ui/flat-scheme</code> and <code>ui/quiet-scheme</code> of github.com/Taha-Mahmoodi/vectorcraft.</em></p>
+<p><em>Proposal paper. Companion files: FigCraft prototype (<code>VectorCraft UI proposal.figcraft</code>), mockups (<code>mockups/</code>), live screenshots of the real app (<code>live/</code>) and offscreen renders (<code>app/</code>), ready code on branches <code>ui/flat-scheme</code> and <code>ui/quiet-scheme</code> of github.com/Taha-Mahmoodi/vectorcraft.</em></p>
 <h2 id="abstract">Abstract</h2>
-<p>VectorCraft 0.12 restyled the interface (#2331): the toolbar, the panel rail and the panel dock became rounded <em>cards</em> set inside square columns, controls got softer corners, and a coral accent now marks the active tool, selected rows and filled buttons. We argue that for a design tool this look works against its users. Nested containers add edges that carry no grouping information, corner radii no longer follow a system, and a saturated accent competes with the artwork for attention and for colour judgement. We ground each claim in perception research and design-system practice, audit the current code and screenshots, and present two alternatives — <strong>A · Flat</strong> and <strong>B · Quiet</strong>, each in Dark and Light — designed in FigCraft and <strong>already implemented</strong> as opt-in colour schemes that keep Modern and Classic unchanged. On matched renders of the real interface code, both proposals lower the edge density of the chrome by 16–22 % at the default Medium Dark brightness (4–8 % in Light) and cut its coloured pixels by 28–42 % at Medium Dark, with Modern and Classic unchanged. We ask the project owner to choose one of them (or neither) as the default; the code can be opened as pull requests the same day.</p>
+<p>VectorCraft 0.12 restyled the interface (#2331): the toolbar, the panel rail and the panel dock became rounded <em>cards</em> set inside square columns, controls got softer corners, and a coral accent now marks the active tool, selected rows and filled buttons. We argue that for a design tool this look works against its users. Nested containers add edges that carry no grouping information, corner radii no longer follow a system, and a saturated accent competes with the artwork for attention and for colour judgement. We ground each claim in perception research and design-system practice, audit the current code and screenshots, and present two alternatives — <strong>A · Flat</strong> and <strong>B · Quiet</strong>, each in Dark and Light — designed in FigCraft and <strong>already implemented</strong> as opt-in colour schemes that keep Modern and Classic unchanged. On matched screenshots of the running app, both proposals lower the edge density of the chrome by 19–20 % at the default Medium Dark brightness (5–10 % in Light) and cut its coloured pixels by 27–42 % at Medium Dark, with Modern and Classic unchanged. We ask the project owner to choose one of them (or neither) as the default; the code can be opened as pull requests the same day.</p>
 <h2 id="1-introduction">1 Introduction</h2>
 <p>A vector illustration tool is used for hours at a time by people whose job is to judge shape and colour. Its interface should recede: the artwork should be the most salient, most colourful thing on screen, and the chrome around it should be quiet, predictable and consistent.</p>
 <p>The 0.12 restyle (#2331, merged 2026‑10‑16) moved VectorCraft in the other direction. Users have noticed. Issue #3134 reports that "VectorCraft looks noticeably different from PhotoCraft … the two no longer feel like they belong to the same suite", citing the card toolbar and the flattened panel tabs, and PR #3175 proposes to bring the 0.11 look back as a third colour scheme (held for the owner's decision). This author's own first reaction, as a daily user on macOS, was that the side panels "are round containers inside a square container" and that the interface looks cluttered and unprofessional for a professional design tool.</p>
@@ -162,11 +162,11 @@ ul li { margin: 2pt 0; font-size: 9.5pt; }
 <p><strong>Quality gate.</strong> <code>cargo xtask ci</code> passes end to end on both branch tips — <em>"CI summary: all 10 steps passed (fmt, clippy, test, no-bundled-fonts, pdf-deps, assets, brands, cursors, layers, wasm)"</em>: 8 812 tests on Flat, 8 814 on Quiet, 0 failures; 328 assets attributed; 28 crates without layering violations; all 23 wasm crates check.</p>
 <p><strong>Known differences from the mockups (Quiet).</strong> egui draws only outer shadows, so inset fields are a darker fill with a shade along the top edge; native egui buttons and combo boxes get the colours but not the shadow; small marks keep 4 pt corners (at 6 pt a 13 pt check box reads as a radio button); the status and hint bars stay two bars. None of these change the argument.</p>
 <h2 id="6-evaluation">6 Evaluation</h2>
-<p><strong>Method.</strong> We built the same document (a yellow circle, a blue rectangle and the text "Poster draft", with the circle selected) in each build, at 1440 × 900 points, Properties and Layers tabs, and rendered the whole window offscreen with egui_kittest's wgpu renderer at 2× (the same egui frame the window shows; harness in <code>tools/</code>). We measured the <em>chrome</em> — every pixel outside the canvas rectangle the app reports — for (a) <strong>edge density</strong>, the share of pixels where the Sobel gradient of CIELAB L* exceeds 8 per pixel (Mack &amp; Oliva 2004), and (b) <strong>chromatic share</strong>, the share of pixels with CIELAB chroma C*ab &gt; 15. The script is <code>tools/metrics.py</code> in the proposal repository.</p>
+<p><strong>Method.</strong> We built the same document (a yellow circle, a blue rectangle and the text "Poster draft", with the circle selected) in a fresh window of each build, resized it to 1440 × 900 points, and took screenshots of the live window (Retina, 2×) through the app's control channel (<code>ui.screenshot</code>), on the Properties and Layers tabs. <em>Today</em> is the released VectorCraft 0.14.0 (Modern scheme, as shipped); A and B are the proposal branch, built in release mode. We measured the <em>chrome</em> — every pixel outside the canvas rectangle the app reports — for (a) <strong>edge density</strong>, the share of pixels where the Sobel gradient of CIELAB L* exceeds 8 per pixel (Mack &amp; Oliva 2004), and (b) <strong>chromatic share</strong>, the share of pixels with CIELAB chroma C*ab &gt; 15. Scripts: <code>tools/shoot.py</code> and <code>tools/metrics.py</code>; screenshots and canvas rectangles: <code>live/</code>.</p>
 <table>
 <thead>
 <tr>
-<th>Build (offscreen render of the real UI)</th>
+<th>Live screenshot</th>
 <th style="text-align: right;">Edge density, Properties</th>
 <th style="text-align: right;">Edge density, Layers</th>
 <th style="text-align: right;">Chromatic share, Properties</th>
@@ -175,55 +175,56 @@ ul li { margin: 2pt 0; font-size: 9.5pt; }
 </thead>
 <tbody>
 <tr>
-<td>Today · Modern, Medium Dark</td>
-<td style="text-align: right;">6.35 %</td>
-<td style="text-align: right;">5.22 %</td>
-<td style="text-align: right;">0.31 %</td>
-<td style="text-align: right;">0.47 %</td>
+<td>Today · 0.14.0 Modern, Medium Dark</td>
+<td style="text-align: right;">6.25 %</td>
+<td style="text-align: right;">5.05 %</td>
+<td style="text-align: right;">0.33 %</td>
+<td style="text-align: right;">0.49 %</td>
 </tr>
 <tr>
 <td>A · Flat, Medium Dark</td>
-<td style="text-align: right;">5.36 % (−16 %)</td>
-<td style="text-align: right;">4.39 % (−16 %)</td>
-<td style="text-align: right;">0.18 % (−42 %)</td>
-<td style="text-align: right;">0.34 % (−28 %)</td>
+<td style="text-align: right;">5.07 % (−19 %)</td>
+<td style="text-align: right;">4.05 % (−20 %)</td>
+<td style="text-align: right;">0.19 % (−42 %)</td>
+<td style="text-align: right;">0.36 % (−27 %)</td>
 </tr>
 <tr>
 <td>B · Quiet, Medium Dark</td>
-<td style="text-align: right;">5.02 % (−21 %)</td>
-<td style="text-align: right;">4.07 % (−22 %)</td>
-<td style="text-align: right;">0.18 % (−42 %)</td>
-<td style="text-align: right;">0.33 % (−30 %)</td>
+<td style="text-align: right;">5.06 % (−19 %)</td>
+<td style="text-align: right;">4.07 % (−19 %)</td>
+<td style="text-align: right;">0.19 % (−42 %)</td>
+<td style="text-align: right;">0.35 % (−29 %)</td>
 </tr>
 <tr>
-<td>Today · Modern, Light</td>
-<td style="text-align: right;">6.17 %</td>
-<td style="text-align: right;">4.95 %</td>
-<td style="text-align: right;">0.18 %</td>
-<td style="text-align: right;">0.34 %</td>
+<td>Today · 0.14.0 Modern, Light</td>
+<td style="text-align: right;">5.42 %</td>
+<td style="text-align: right;">4.13 %</td>
+<td style="text-align: right;">0.19 %</td>
+<td style="text-align: right;">0.36 %</td>
 </tr>
 <tr>
 <td>A · Flat, Light</td>
-<td style="text-align: right;">5.73 % (−7 %)</td>
-<td style="text-align: right;">4.77 % (−4 %)</td>
-<td style="text-align: right;">0.18 %</td>
-<td style="text-align: right;">0.34 %</td>
+<td style="text-align: right;">4.93 % (−9 %)</td>
+<td style="text-align: right;">3.92 % (−5 %)</td>
+<td style="text-align: right;">0.19 %</td>
+<td style="text-align: right;">0.36 %</td>
 </tr>
 <tr>
 <td>B · Quiet, Light</td>
-<td style="text-align: right;">5.65 % (−8 %)</td>
-<td style="text-align: right;">4.70 % (−5 %)</td>
-<td style="text-align: right;">0.18 %</td>
-<td style="text-align: right;">0.33 %</td>
+<td style="text-align: right;">4.87 % (−10 %)</td>
+<td style="text-align: right;">3.86 % (−7 %)</td>
+<td style="text-align: right;">0.19 %</td>
+<td style="text-align: right;">0.35 %</td>
 </tr>
 </tbody>
 </table>
-<p><em>Chrome = all pixels outside the canvas rectangle the app reports (≈ 2.1 million pixels per 2× render). Renders: <code>app/kittest-*.png</code>, made with egui_kittest's wgpu renderer at 1440 × 900 points, 2× (the screen was locked, so live screenshots were not possible; the kittest renders draw the same egui frame the window shows).</em></p>
-<p><img alt="Figure 6 — The real app, Medium Dark: today, A, B." src="compare-mediumDark.png"><br><span>Figure 6 — The real app, Medium Dark: today, A, B.</span>
-<img alt="Figure 7 — The real app, Light: today, A, B." src="compare-light.png"><br><span>Figure 7 — The real app, Light: today, A, B.</span>
-<img alt="Figure 8 — Close-up of the rail and dock: today's cards vs. flush columns." src="compare-mediumDark-dock.png"><br><span>Figure 8 — Close-up of the rail and dock: today's cards vs. flush columns.</span></p>
-<p><strong>Reading the numbers.</strong> Removing the cards and the frame bands removes edges, so edge density falls in every case, most at Medium Dark, where today's cards sit on a much darker frame colour. In Light the cards are low-contrast already, so the gain is small. The coloured-pixel share at Medium Dark falls because the active tool and selected rows are no longer tinted with the accent; what remains in every build is the selected object's fill swatch and the Discord button. Modern at Light uses a light accent tint that falls under the chroma threshold, so it measures the same as the proposals there.</p>
-<p><strong>Limits.</strong> These are image proxies, not a user study. Edge density depends on content (the Layers tab differs per build in row styling); chromatic share is small in every build because the accent covers few pixels — its cost is salience (Section 2.3), not area. A short preference test with community members (both proposals installed side by side via the Color Scheme preference) would settle what the measurements cannot.</p>
+<p><em>Chrome = all pixels outside the canvas rectangle (≈ 2.0 million pixels per screenshot). Screenshots of every scheme at all four brightness levels are in <code>live/</code>; offscreen renders of the same code (egui_kittest, <code>app/</code>) show the same direction.</em></p>
+<p><img alt="Figure 6 — Live screenshots, Medium Dark: today (0.14.0), A, B." src="compare-mediumDark.png"><br><span>Figure 6 — Live screenshots, Medium Dark: today (0.14.0), A, B.</span>
+<img alt="Figure 7 — Live screenshots, Light: today, A, B." src="compare-light.png"><br><span>Figure 7 — Live screenshots, Light: today, A, B.</span>
+<img alt="Figure 8 — Layers tab, Medium Dark: today, A, B." src="compare-mediumDark-layers.png"><br><span>Figure 8 — Layers tab, Medium Dark: today, A, B.</span>
+<img alt="Figure 9 — Close-up of the rail and dock: today's cards vs. flush columns." src="compare-mediumDark-dock.png"><br><span>Figure 9 — Close-up of the rail and dock: today's cards vs. flush columns.</span></p>
+<p><strong>Reading the numbers.</strong> Removing the cards and the frame bands removes edges, so edge density falls in every case, most at Medium Dark, where today's cards sit on a much darker frame colour; in Light the cards are low-contrast already, so the gain is smaller. In the live window A and B measure almost the same: Quiet's missing divider lines are offset by its pill tabs and shadows. The coloured-pixel share at Medium Dark falls because the active tool and selected rows are no longer tinted with the accent; what remains in every build is the selected object's fill swatch and the Discord button. Modern at Light uses a light accent tint that falls under the chroma threshold, so it measures the same as the proposals there.</p>
+<p><strong>Limits.</strong> These are image proxies, not a user study. Edge density depends on content (the Layers tab differs per build in row styling), and today's build (0.14.0) is a little newer than the proposal branch's base, though nothing in the measured chrome differs between them except the scheme; chromatic share is small in every build because the accent covers few pixels — its cost is salience (Section 2.3), not area. A short preference test with community members (both proposals installed side by side via the Color Scheme preference) would settle what the measurements cannot.</p>
 <h2 id="7-decision-requested">7 Decision requested</h2>
 <ol>
 <li><strong>Merge the corner-scale commit regardless.</strong> It changes nothing visible in Modern or Classic beyond aligning stray radii, and gives every future style one place to change.</li>

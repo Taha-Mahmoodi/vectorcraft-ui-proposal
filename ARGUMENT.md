@@ -22,7 +22,7 @@
 
 - FigCraft prototype with design-system sheets (tokens as variables), every screen in both modes, clickable.
 - Both designs implemented as opt-in Color Schemes; Modern and Classic untouched; "make it the default" is a separate commit; full `cargo xtask ci` green.
-- Measured on renders of the real code: lower the edge density of the chrome by 16–22 % at the default Medium Dark brightness (4–8 % in Light) and cut its coloured pixels by 28–42 % at Medium Dark, with Modern and Classic unchanged
+- Measured on live screenshots of the running app: lower the edge density of the chrome by 19–20 % at the default Medium Dark brightness (5–10 % in Light) and cut its coloured pixels by 27–42 % at Medium Dark, with Modern and Classic unchanged
 
 ## The decision
 
